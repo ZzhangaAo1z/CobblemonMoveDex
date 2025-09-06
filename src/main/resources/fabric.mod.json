@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblemonmovedex",
+  "version": "${version}",
+  "name": "CobblemonMoveDex",
+  "description": "Add the function of querying learnable Moves to Cobblemon's Pokedex.",
+  "authors": [
+    "ZzhangaAo1z"
+  ],
+  "contact": {
+    "repo": "https://github.com/Administrator/CobblemonMoveDex"
+  },
+  "license": "MPL-2.0",
+  "icon": "assets/cobblemonmovedex/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "zzhangaao1z.cobblemonmovedex.CobblemonMoveDex"
+    ]
+  },
+  "mixins": [
+    "cobblemonmovedex.mixins.json"
+  ],
+  "accessWidener": "cobblemonmovedex.accesswidener",
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

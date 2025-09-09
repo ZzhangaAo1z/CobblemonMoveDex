@@ -1,4 +1,6 @@
 {
   "cobblemonmovedex.ui.pokedex.info.moves_level": "可学习招式: 升级",
-  "cobblemonmovedex.ui.pokedex.info.moves_tm": "可学习招式: 学习器"
+  "cobblemonmovedex.ui.pokedex.info.moves_tm": "可学习招式: 学习器",
+  "cobblemonmovedex.ui.pokedex.info.moves_tutor": "可学习招式: 传授",
+  "cobblemonmovedex.ui.pokedex.info.moves_egg": "可学习招式: 遗传"
 }

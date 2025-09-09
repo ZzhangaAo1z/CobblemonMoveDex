@@ -21,6 +21,10 @@ public class LearnsetMixin {
 
     @Shadow @Final private Set<MoveTemplate> evolutionMoves;
 
+    @Shadow @Final private List<MoveTemplate> tutorMoves;
+
+    @Shadow @Final private List<MoveTemplate> eggMoves;
+
     @Inject(method = "decode", at = @At("TAIL"))
     private void decode(RegistryFriendlyByteBuf buffer, CallbackInfo ci){
         int evo_size = buffer.readShort();
@@ -33,6 +37,16 @@ public class LearnsetMixin {
         for(int i = 1; i <= tm_size; i++){
             this.tmMoves.add(Moves.INSTANCE.getByNumericalId(buffer.readInt()));
         }
+        int tutor_size = buffer.readShort();
+        this.tutorMoves.clear();
+        for(int i = 1; i <= tutor_size; i++){
+            this.tutorMoves.add(Moves.INSTANCE.getByNumericalId(buffer.readInt()));
+        }
+        int egg_size = buffer.readShort();
+        this.eggMoves.clear();
+        for(int i = 1; i <= egg_size; i++){
+            this.eggMoves.add(Moves.INSTANCE.getByNumericalId(buffer.readInt()));
+        }
     }
 
     @Inject(method = "encode", at = @At("TAIL"))
@@ -41,6 +55,10 @@ public class LearnsetMixin {
         this.evolutionMoves.forEach(move -> buffer.writeInt(move.getNum()));
         buffer.writeShort(this.tmMoves.size());
         this.tmMoves.forEach(move -> buffer.writeInt(move.getNum()));
+        buffer.writeShort(this.tutorMoves.size());
+        this.tutorMoves.forEach(move -> buffer.writeInt(move.getNum()));
+        buffer.writeShort(this.eggMoves.size());
+        this.eggMoves.forEach(move -> buffer.writeInt(move.getNum()));
     }
 
 }

@@ -1,4 +1,6 @@
 {
   "cobblemonmovedex.ui.pokedex.info.moves_level": "Learnable moves: LevelUp",
-  "cobblemonmovedex.ui.pokedex.info.moves_tm": "Learnable moves: TM"
+  "cobblemonmovedex.ui.pokedex.info.moves_tm": "Learnable moves: TM",
+  "cobblemonmovedex.ui.pokedex.info.moves_tutor": "Learnable moves: Tutor",
+  "cobblemonmovedex.ui.pokedex.info.moves_egg": "Learnable moves: Egg"
 }

@@ -51,10 +51,10 @@ public class MovesWidget extends ScrollingWidget<MovesWidget.MovesWidgetEntry> {
     }
 
     public void switchPage(boolean next){
-        if(next && this.page == 0){
-            this.page = 1;
-        }else if(!next && this.page != 0){
-            this.page = 0;
+        if(next && this.page < 3){
+            this.page += 1;
+        }else if(!next && this.page > 0){
+            this.page -= 1;
         }
         setEntries();
         setScrollAmount(0);
@@ -62,11 +62,20 @@ public class MovesWidget extends ScrollingWidget<MovesWidget.MovesWidgetEntry> {
 
     public void setEntries(){
         this.clearEntries();
-        if(this.page == 0) {
-            this.learnset.getEvolutionMoves().forEach(move -> new MovesWidgetEntry(0, move));
-            this.learnset.getLevelUpMoves().forEach((level, list) -> list.forEach(move -> addEntry(new MovesWidgetEntry(level, move))));
-        }else {
-            this.learnset.getTmMoves().forEach(move -> addEntry(new MovesWidgetEntry(null, move)));
+        switch (this.page){
+            case 0:
+                this.learnset.getEvolutionMoves().forEach(move -> new MovesWidgetEntry(0, move));
+                this.learnset.getLevelUpMoves().forEach((level, list) -> list.forEach(move -> addEntry(new MovesWidgetEntry(level, move))));
+                break;
+            case 1:
+                this.learnset.getTmMoves().forEach(move -> addEntry(new MovesWidgetEntry(null, move)));
+                break;
+            case 2:
+                this.learnset.getTutorMoves().forEach(move -> addEntry(new MovesWidgetEntry(null, move)));
+                break;
+            case 3:
+                this.learnset.getEggMoves().forEach(move -> addEntry(new MovesWidgetEntry(null, move)));
+                break;
         }
     }
 
@@ -117,12 +126,20 @@ public class MovesWidget extends ScrollingWidget<MovesWidget.MovesWidgetEntry> {
 
     @Override
     public void renderWidget(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float delta){
-        MutableComponent component = this.page == 0 ? Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_level") : Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_tm");
-        RenderHelperKt.drawScaledText(graphics, null, component.setStyle(Style.EMPTY.withBold(true)), this.x + 9, this.y - 10, 1,100, Integer.MAX_VALUE, 0x00FFFFFF, false, true, null, null);
+        MutableComponent component = switch (this.page) {
+            case 0 -> Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_level");
+            case 1 -> Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_tm");
+            case 2 -> Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_tutor");
+            case 3 -> Component.translatable("cobblemonmovedex.ui.pokedex.info.moves_egg");
+            default -> null;
+        };
+        if(component != null){
+            RenderHelperKt.drawScaledText(graphics, null, component.setStyle(Style.EMPTY.withBold(true)), this.x + 9, this.y - 10, 1,100, Integer.MAX_VALUE, 0x00FFFFFF, false, true, null, null);
+        }
         super.renderWidget(graphics, mouseX, mouseY, delta);
     }
 
-    public static class MovesWidgetEntry extends ScrollingWidget.Slot<MovesWidgetEntry>{
+    public static class MovesWidgetEntry extends Slot<MovesWidgetEntry>{
 
         private static final DecimalFormat df = new DecimalFormat("0");
 
